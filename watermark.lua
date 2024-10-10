@@ -1,8 +1,6 @@
-local Watermark = {}
-
 -- Crear un ScreenGui
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "WatermarkDisplay"
+screenGui.Name = "FPSDisplay"
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Crear un TextLabel para mostrar la información
@@ -28,20 +26,15 @@ end
 actualizarPosicion()
 
 -- Función para actualizar el FPS, nombre de usuario y hora
-function Watermark.start()
-    -- Actualizar el texto cada segundo
-    while Watermark.isActive do
-        local player = game.Players.LocalPlayer
-        local fps = math.floor(1 / wait()) -- Calcular FPS
-        local hora = os.date("%H:%M:%S") -- Obtener la hora
-        textLabel.Text = string.format("PGv2 | FPS: %d | %s | %s", fps, player.Name, hora)
-    end
+local function actualizarTexto()
+    local player = game.Players.LocalPlayer
+    local fps = math.floor(1 / wait()) -- Calcular FPS
+    local hora = os.date("%H:%M:%S") -- Obtener la hora
+    textLabel.Text = string.format("PGv2 | FPS: %d | %s | %s", fps, player.Name, hora)
 end
 
-function Watermark.stop()
-    textLabel.Text = "" -- Limpiar el texto al desactivar
+-- Actualizar el texto cada segundo
+while true do
+    actualizarTexto()
+    wait(1)
 end
-
--- Llamar a la función para comenzar el watermark
-Watermark.isActive = true
-return Watermark
